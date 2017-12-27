@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container center-block ">
+  <div class="row">
+      <table class="table table-striped">
+        <thead>
+        <tr class="info">
+          <th>№</th>
+          <th>Уровень</th>
+          <th>Вопрос</th>
+          <th>Ответ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @tasks.each do |task| %>
+            <tr>
+              <td><%= task.id%></td>
+              <td><%= task.level%></td>
+              <td><%= task.question%></td>
+              <td><%= task.answer%></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="pagination-lg text-center plagination">
+        <%= paginate @tasks, them: 'twitter-bootstrap'%>
+      </div>
+  </div>
+</div>
