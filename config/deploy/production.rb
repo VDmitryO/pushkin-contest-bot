@@ -59,3 +59,5 @@ server "92.53.91.100", user: "deployer", roles: %w{app db web}, my_property: :my
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+config.assets.compile = true

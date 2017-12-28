@@ -85,4 +85,6 @@ test:
 production:
   <<: *default
   database: pushkin_production
+  pool: 5
+
 
