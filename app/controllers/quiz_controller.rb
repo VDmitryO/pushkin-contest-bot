@@ -23,7 +23,6 @@ class QuizController < ApplicationController
     Net::HTTP.post_form(URL, parameters)
     task_params = { level: params[:level], question: @question, answer: answer }
     TaskWorker.perform_async(task_params)
-    p "END"
   end
 
   private
