@@ -6,17 +6,17 @@ class QuizController < ApplicationController
   end
 
   def create
-    @question = params[:question]
+    @question = params[:question].lstrip
     answer = case params[:level]
              when 1
-               POEMS_1[@question.lstrip]
-             when '2', '3', '4'
+               POEMS_1[@question]
+             when 2, 3, 4
                level_234(POEMS_234)
-             when '5'
+             when 5
                level_5(@question.include?(',') ? POEMS_5_COMMA : POEMS_5)
-             when '6', '7'
+             when 6, 7
                POEMS_67[@question.scan(/[[:alpha:]]/).sort]
-             when '8'
+             when 8
                level_8(POEMS_8)
              end
     parameters = { answer: answer, token: API_KEY, task_id: params[:id] }
