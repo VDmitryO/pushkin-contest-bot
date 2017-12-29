@@ -26,6 +26,7 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
+require 'capistrano/postgresql'
 require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
@@ -34,8 +35,8 @@ require "capistrano/rails/migrations"
 require "capistrano/sidekiq"
 require "capistrano/puma"
 require "capistrano/puma/nginx"
-install_plugin Capistrano::Puma  # Default puma tasks
-install_plugin Capistrano::Puma::Workers  # if you want to control the workers (in cluster mode)
+install_plugin Capistrano::Puma # Default puma tasks
+install_plugin Capistrano::Puma::Workers # if you want to control the workers (in cluster mode)
 install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
 install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
 # require "capistrano/passenger"
