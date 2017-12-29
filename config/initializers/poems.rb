@@ -3,18 +3,14 @@
 
 def get_poems
   poems = JSON.parse(File.read('db/poems.json'))
-  binding.pry
   poems.each do |name, text|
     text.each_with_index do |str, index|
-      # poems[name][index].gsub!(160.chr(Encoding::UTF_8), ' ')
-      # poems[name][index].strip!
       str.gsub!(160.chr(Encoding::UTF_8), ' ')
       str.strip!
       str.chop! if /[[:punct:]]/ =~ str[-1]
       #poems[name][index] = str
     end
   end
-  binding.pry
   poems
 end
 
