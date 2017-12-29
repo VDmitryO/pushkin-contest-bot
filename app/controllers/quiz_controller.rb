@@ -8,8 +8,8 @@ class QuizController < ApplicationController
   def create
     @question = params[:question]
     answer = case params[:level]
-             when '1'
-               POEMS_1[@question]
+             when 1
+               POEMS_1[@question.lstrip]
              when '2', '3', '4'
                level_234(POEMS_234)
              when '5'
