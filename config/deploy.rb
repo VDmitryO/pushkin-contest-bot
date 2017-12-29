@@ -40,6 +40,12 @@ set :ssh_options, forward_agent: true
 
 set :rvm_ruby_version, '2.4.2@pushkin-contest'
 
+set :pty, false
+
+set :sidekiq_role, :sidekiq
+set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
+set :sidekiq_log, "#{current_path}/log/sidekiq.log"
+
 set :puma_preload_app, true
 set :puma_init_active_record, true
 #set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
