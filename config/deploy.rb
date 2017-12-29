@@ -42,4 +42,4 @@ set :rvm_ruby_version, '2.4.2@pushkin-contest'
 
 set :puma_preload_app, true
 set :puma_init_active_record, true
-#set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
