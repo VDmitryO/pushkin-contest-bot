@@ -26,14 +26,16 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
- require "capistrano/rvm"
- require "capistrano/bundler"
- require "capistrano/rails"
- require "capistrano/rails/assets"
- require "capistrano/rails/migrations"
- require "capistrano/sidekiq"
- require "capistrano/puma"
- require "capistrano/puma/nginx"
+require "capistrano/rvm"
+require "capistrano/bundler"
+require "capistrano/rails"
+require "capistrano/rails/assets"
+require "capistrano/rails/migrations"
+require "capistrano/sidekiq"
+require "capistrano/puma"
+require "capistrano/puma/nginx"
+install_plugin Capistrano::Puma
+install_plugin Capistrano::Puma::Nginx
 # require "capistrano/passenger"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
