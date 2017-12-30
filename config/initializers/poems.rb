@@ -18,7 +18,7 @@ end
 
 def update_poems1(poems)
   poems.each do |k, v|
-    poems.delete(k) if v.size > 1000
+    poems.delete(k) if v.size > 320
   end
 end
 
