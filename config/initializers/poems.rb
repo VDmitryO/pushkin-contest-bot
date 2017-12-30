@@ -1,15 +1,18 @@
 # require_relative '../../lib/parser_poems'
 # ParserPoems.new.create_poems
 
-def get_poems
+def get_poems_with_punct
   poems = JSON.parse(File.read('db/poems.json'))
-  poems.each do |name, text|
-    text.each_with_index do |str, index|
-      str.gsub!(160.chr(Encoding::UTF_8), ' ')
-      str.strip!
-      str.chop! if /[[:punct:]]/ =~ str[-1]
-      #poems[name][index] = str
-    end
+  poems.values.flatten.each do |str|
+    str.gsub!(160.chr(Encoding::UTF_8), ' ')
+    str.strip!
+  end
+  poems
+end
+
+def get_poems_without_punct(poems)
+  poems.values.flatten.each do |str|
+    str.chop! if /[[:punct:]]/ =~ str[-1]
   end
   poems
 end
@@ -29,7 +32,7 @@ def get_poems5(poems)
   poems.values.flatten.each do |str|
     words = str.scan(/[[:alpha:]]+/)
     amount = words.size
-    if str.include? ','
+    if /[[:punct:]]/ =~ str
       poems5[0][amount] ||= []
       poems5[0][amount] << words
     else
@@ -53,22 +56,23 @@ def get_poems8(poems)
   poems8 = {}
   poems.values.flatten.each do |str|
     letters = str.scan(/[[:alpha:]]/).sort
-    amount_words = str.scan(/[[:alpha:]]+/).size
     amount_letters = letters.size
-    poems8[amount_words] ||= {}
-    poems8[amount_words][amount_letters] ||= {}
-    poems8[amount_words][amount_letters][letters] = str
+    poems8[amount_letters] ||= {}
+    poems8[amount_letters][letters] = str
   end
   poems8
 end
 
 
-poems = get_poems
+poems_with_punct = get_poems_with_punct
+poems = get_poems_without_punct(poems_with_punct.deep_dup)
+binding.pry
 POEMS_1 = get_poems1(poems)
-POEMS_234 = poems.values.join(' ')
+POEMS_2 = poems.values.join(' ')
+POEMS_34 = poems_with_punct.values.join(' ')
 poems5 = get_poems5(poems)
-POEMS_5_COMMA = poems5[0]
-POEMS_5 = poems5[1]
+POEMS_5_P = poems5[0] # With punctuation
+POEMS_5 = poems5[1] # Without punctuation
 POEMS_67 = get_poems67(poems)
 POEMS_8 = get_poems8(poems)
 

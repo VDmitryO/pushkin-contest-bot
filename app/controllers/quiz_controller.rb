@@ -10,10 +10,12 @@ class QuizController < ApplicationController
     answer = case params[:level]
              when 1
                POEMS_1[@question]
-             when 2, 3, 4
-               level_234(POEMS_234)
-             when 5
-               level_5(@question.include?(',') ? POEMS_5_COMMA : POEMS_5)
+             when 2
+               level_2(POEMS_2)
+             when 3, 4
+               level_34(POEMS_34)
+               when 5
+               level_5(/[[:punct:]]/ =~ @question ? POEMS_5_P : POEMS_5)
              when 6, 7
                POEMS_67[@question.scan(/[[:alpha:]]/).sort]
              when 8
@@ -29,7 +31,14 @@ class QuizController < ApplicationController
 
   private
 
-  def level_234(poems)
+  def level_2(poems)
+    check_str = @question.gsub(/[\n[:punct:]]/, '.')
+    regexp = Regexp.new(check_str.gsub('.WORD.', '[[:word:]]+'))
+    result = regexp.match(poems).to_s.scan(/[[:alpha:]]+/)
+    result[check_str.scan(/[[:alpha:]]+/).index('WORD')]
+  end
+
+  def level_34(poems)
     check_str = @question.gsub(/[\n[:punct:]]/, '.')
     regexp = Regexp.new(check_str.gsub('.WORD.', '[[:word:]]+'))
     result = regexp.match(poems).to_s.scan(/[[:alpha:]]+/)
@@ -47,7 +56,7 @@ class QuizController < ApplicationController
       errors = 0
       str.each_with_index do |word, index|
         unless word == words[index]
-          answer = words[index] + ',' + word
+          answer = word + ',' + words[index]
           errors += 1
         end
         break if errors == 2
@@ -59,9 +68,7 @@ class QuizController < ApplicationController
 
   def level_8(poems)
     letters = @question.scan(/[[:alpha:]]/).sort
-    amount_words = @question.scan(/[[:alpha:]]+/).size
-    amount_letters = letters.size
-    poems[amount_words][amount_letters].each do |key, value|
+    poems[letters.size].each do |key, value|
       first_error = 0
       last_error = key.size
       key.each_with_index do |char, index|
