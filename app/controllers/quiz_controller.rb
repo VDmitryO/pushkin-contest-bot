@@ -6,8 +6,8 @@ class QuizController < ApplicationController
   end
 
   def create
-    #@question = params[:question].gsub(160.chr(Encoding::UTF_8), ' ').lstrip
-    @question = params[:question]
+    @question = params[:question].gsub(160.chr(Encoding::UTF_8), ' ').lstrip
+    #@question = params[:question]
     answer = case params[:level]
              when 1
                POEMS_1[@question]
@@ -19,37 +19,13 @@ class QuizController < ApplicationController
                level_5(/[[:punct:]]/ =~ @question ? POEMS_5_P : POEMS_5)
              when 6, 7
                POEMS_67[@question.scan(/[[:alpha:]]/).sort]
-               when 8
-                 answer = nil
-                 error = 0
-               letters = @question.scan(/[[:alpha:]]/).sort
-               POEMS_8[letters.size].each do |key, value|
-                 first_error = 0
-                 last_error = key.size
-                 key.each_with_index do |char, index|
-                   unless char == letters[index]
-                     first_error = index
-                     break
-                   end
-                 end
-                 key.reverse_each do |char|
-                   last_error -= 1
-                   break unless char == letters[last_error]
-                 end
-                 range1 = (first_error + 1)..last_error
-                 range2 = first_error...last_error
-                 if key.values_at(range1) == letters.values_at(range2) || key.values_at(range2) == letters.values_at(range1)
-                   answer = value
-                   error = 1
-                 end
-                 break if error == 1
-               end
-                 answer
+             when 8
+               level_8(POEMS_8)
              end
     parameters = { answer: answer, token: API_KEY, task_id: params[:id] }
     Net::HTTP.post_form(URL, parameters)
-    # task_params = { level: params[:level], question: @question, answer: answer }
-    # Thread.new { Task.new(task_params).save }
+    task_params = { level: params[:level], question: @question, answer: answer }
+    Thread.new { Task.new(task_params).save }
     # TaskWorker.perform_async(task_params)
     render json: 'ok'
   end
