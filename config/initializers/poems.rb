@@ -72,7 +72,6 @@ end
 
 poems_with_punct = get_poems_with_punct
 update_poems(poems_with_punct)
-binding.pry
 poems = get_poems_without_punct(poems_with_punct.deep_dup)
 POEMS_1 = get_poems1(poems)
 POEMS_2 = poems.values.join(' ')
