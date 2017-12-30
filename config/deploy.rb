@@ -38,7 +38,7 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 # Uncomment the following to require manually verifying the host key before first deploy.
 set :ssh_options, forward_agent: true
 
-set :rvm_ruby_version, '2.4.2@pushkin-contest'
+# set :rvm_ruby_version, '2.4.2@pushkin-contest'
 
 set :pty, false
 
