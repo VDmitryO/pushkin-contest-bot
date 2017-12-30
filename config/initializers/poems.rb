@@ -18,7 +18,7 @@ end
 
 def update_poems1(poems)
   poems.each do |k, v|
-    poems.delete(k) if v.size > 25
+    poems.delete(k) if v.size > 1000
   end
 end
 
@@ -74,7 +74,6 @@ def get_poems8(poems)
   end
   poems8
 end
-
 
 poems_with_punct = get_poems_with_punct
 update_poems1(poems_with_punct)

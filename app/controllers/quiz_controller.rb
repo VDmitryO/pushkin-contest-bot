@@ -89,4 +89,5 @@ class QuizController < ApplicationController
     end
     nil
   end
+  
 end
