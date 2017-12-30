@@ -19,8 +19,32 @@ class QuizController < ApplicationController
                level_5(/[[:punct:]]/ =~ @question ? POEMS_5_P : POEMS_5)
              when 6, 7
                POEMS_67[@question.scan(/[[:alpha:]]/).sort]
-             when 8
-               level_8(POEMS_8)
+               when 8
+                 answer = nil
+                 error = 0
+               letters = @question.scan(/[[:alpha:]]/).sort
+               POEMS_8[letters.size].each do |key, value|
+                 first_error = 0
+                 last_error = key.size
+                 key.each_with_index do |char, index|
+                   unless char == letters[index]
+                     first_error = index
+                     break
+                   end
+                 end
+                 key.reverse_each do |char|
+                   last_error -= 1
+                   break unless char == letters[last_error]
+                 end
+                 range1 = (first_error + 1)..last_error
+                 range2 = first_error...last_error
+                 if key.values_at(range1) == letters.values_at(range2) || key.values_at(range2) == letters.values_at(range1)
+                   answer = value
+                   error = 1
+                 end
+                 break if error == 1
+               end
+                 answer
              end
     parameters = { answer: answer, token: API_KEY, task_id: params[:id] }
     Net::HTTP.post_form(URL, parameters)
