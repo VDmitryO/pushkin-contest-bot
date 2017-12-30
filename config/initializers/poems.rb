@@ -10,6 +10,12 @@ def get_poems_with_punct
   poems
 end
 
+def update_poems(poems)
+  poems.each do |k, v|
+    poems.delete(k) if v.size > 40
+  end
+end
+
 def get_poems_without_punct(poems)
   poems.values.flatten.each do |str|
     str.chop! if /[[:punct:]]/ =~ str[-1]
@@ -65,6 +71,8 @@ end
 
 
 poems_with_punct = get_poems_with_punct
+update_poems(poems_with_punct)
+binding.pry
 poems = get_poems_without_punct(poems_with_punct.deep_dup)
 POEMS_1 = get_poems1(poems)
 POEMS_2 = poems.values.join(' ')
