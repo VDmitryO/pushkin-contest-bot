@@ -8,13 +8,18 @@ class ParserPoems
   def create_poems
     a = Mechanize.new { |agent| agent.user_agent_alias = 'Mac Safari' }
     page = a.get('http://rvb.ru/pushkin/toc.htm')
-    css_array = ['.versusia span', '.versusvia span', '.versusia2 span',
-                 '.versusd2 span', '.versusam2 span', '.versusia3 span',
-                 '.versusia4 span', '.versusch4 span', '.versusam4 span',
-                 '.versusia5 span', '.versusia6 span', '.versusd6 span']
+    css_array = ['.versusia span', '.versusvia span', '.versusraesh span',
+                 '.versusia2 span', '.versusd2 span', '.versusam2 span',
+                 '.versusan2 span', '.versusd3 span', '.versusia3 span',
+                 '.versust3 span', '.versusch3 span', '.versusia4 span',
+                 '.versusch4 span', '.versusam4 span', '.versusan4 span',
+                 '.versusch5 span', '.versusia5 span', '.versusia6 span',
+                 '.versusd6 span', '.versusв6 span', '.versus7syl span',
+                 '.versus8syl span', '.versus10syl span']
     add_poems(page.links[72].click.links.values_at(74..399), css_array)
     add_poems(page.links[73].click.links.values_at(73..558), css_array)
     add_poems(page.links[74].click.links.values_at(73..124), css_array)
+    add_poems(page.links[75].click.links.values_at(73..85), css_array)
     create_file
   end
 

@@ -86,6 +86,7 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  ENV['REDIS_SERVER_URL'] = 'redis://localhost:6389'
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

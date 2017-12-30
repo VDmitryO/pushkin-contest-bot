@@ -6,7 +6,7 @@ class QuizController < ApplicationController
   end
 
   def create
-    @question = params[:question].lstrip
+    @question = params[:question].gsub(160.chr(Encoding::UTF_8), ' ').lstrip
     answer = case params[:level]
              when 1
                POEMS_1[@question]
