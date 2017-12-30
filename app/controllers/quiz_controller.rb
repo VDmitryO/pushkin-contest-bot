@@ -24,8 +24,8 @@ class QuizController < ApplicationController
              end
     parameters = { answer: answer, token: API_KEY, task_id: params[:id] }
     Net::HTTP.post_form(URL, parameters)
-    # task_params = { level: params[:level], question: @question, answer: answer }
-    # Thread.new { Task.new(task_params).save }
+     task_params = { level: params[:level], question: @question, answer: answer }
+     Thread.new { Task.new(task_params).save }
     # TaskWorker.perform_async(task_params)
     render json: 'ok'
   end
